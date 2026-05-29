@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "cloud-xero-plugins",
+  "description": "Cloud-Xero's personal Claude Code skill catalog",
+  "owner": {
+    "name": "Cloud-Xero"
+  },
+  "plugins": [
+    {
+      "name": "xero-skills",
+      "description": "Personal skills collection",
+      "version": "0.1.0",
+      "source": "./plugins/xero-skills",
+      "category": "productivity"
+    }
+  ]
+}
