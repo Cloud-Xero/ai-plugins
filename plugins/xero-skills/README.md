@@ -31,6 +31,19 @@
 - 各スキルのdescriptionに前後工程への参照を明記する（例: pj-1は「後工程は /pj-2-business-model」）
 - 新しい工程スキルを追加するときは、この表と前後スキルのdescriptionを更新すること
 
+## excel-analyze（Excel解析パイプライン）
+
+複雑なExcelブックをWebアプリ移植に向けて解析するスキル。`/excel-analyze <path>` で呼び出すと、4つの専用エージェントを直列（3・4のみ並列）に起動し、`excel_analysis/<ブック名>/` に成果物を出力する。
+
+| 工程 | エージェント | 出力 |
+|---|---|---|
+| 1. 構造棚卸し | `excel-inventory` | `01_inventory.json` / `01_inventory.md` |
+| 2. 数式依存グラフ | `excel-dep-graph` | `02_dependencies.json` / `02_dependency-graph.md` |
+| 3. ロジック仕様書 | `excel-logic-spec` | `03_logic-spec.md` |
+| 4. 回帰テスト用スナップショット | `excel-snapshot` | `04_snapshot.json` / `04_test-cases.md` |
+
+エージェント定義は `agents/`、オーケストレーションは `skills/excel-analyze/` にある。
+
 ## 将来のアイデア
 
 - **pj-0ナビゲーター**: `pj_*` フォルダ内の成果物を見て「完了済み工程と次にやる工程」を診断するスキル。pj-3以降が揃ってから作る
