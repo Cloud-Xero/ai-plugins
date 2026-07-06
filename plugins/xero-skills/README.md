@@ -44,6 +44,12 @@
 
 エージェント定義は `agents/`、オーケストレーションは `skills/excel-analyze/` にある。
 
+## harvest（セッション収穫）
+
+`/harvest [出力先]` で現在のセッションから「やったこと・設計判断・ハマり→解決・申し送り」を収穫ノート1ファイル（`yyyymmdd_{slug}.md`）に抽出する汎用スキル。出力先は 引数 > プロジェクトCLAUDE.mdの `harvest` 規約 > `./docs/harvest/` の順で解決する。テンプレートは `skills/harvest/note-template.md`。
+
+obsidian-tech では出力先を `input/memo/` に規約化しており、収穫ノートをそのまま記事ネタとして `/capture` の査定に回せる。
+
 ## 将来のアイデア
 
 - **pj-0ナビゲーター**: `pj_*` フォルダ内の成果物を見て「完了済み工程と次にやる工程」を診断するスキル。pj-3以降が揃ってから作る
