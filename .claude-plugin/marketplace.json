@@ -7,10 +7,24 @@
   },
   "plugins": [
     {
-      "name": "xero-skills",
-      "description": "Personal skills collection",
+      "name": "xero-biz",
+      "description": "Business strategy, finance, and decision-making skills",
       "version": "0.1.0",
-      "source": "./plugins/xero-skills",
+      "source": "./plugins/xero-biz",
+      "category": "productivity"
+    },
+    {
+      "name": "xero-marketing",
+      "description": "Marketing, customer success, and content creation skills",
+      "version": "0.1.0",
+      "source": "./plugins/xero-marketing",
+      "category": "productivity"
+    },
+    {
+      "name": "xero-work",
+      "description": "Client work, analysis pipelines, and dev utility skills",
+      "version": "0.1.0",
+      "source": "./plugins/xero-work",
       "category": "productivity"
     }
   ]

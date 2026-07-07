@@ -70,7 +70,7 @@
 2. ✅ **法務・契約チェッカー** — `agents/contract-reviewer.md`（opus）。受託契約・SaaS利用規約のリスクを検知
 3. ✅ **市場・競合リサーチャー** — `agents/market-researcher.md`（sonnet）。新サービス判断も受託提案の裏付けも支える調査専任
 
-> 反映には再インストールが必要（`claude plugin marketplace add "$(pwd)"` → `claude plugin install xero-skills@cloud-xero-plugins`）
+> 反映には再インストールが必要（`claude plugin marketplace add "$(pwd)"` → `claude plugin install <plugin-name>@cloud-xero-plugins`）
 
 ### フェーズ2：制作・開発の専任化 ✅ 完了
 
@@ -104,5 +104,5 @@
 ## 実装メモ
 
 - サブエージェントは `apsis-common:add-agent` で scaffold する
-- スキルは `plugins/xero-skills/skills/<name>/` に SKILL.md + INSTRUCTIONS.md（二層構造）
+- スキルはドメインプラグイン（xero-biz / xero-marketing / xero-work）を選んで `plugins/<plugin-name>/skills/<name>/` に SKILL.md + INSTRUCTIONS.md（二層構造）
 - 反映には再インストールが必要（`claude plugin marketplace add` → `claude plugin install`）

@@ -8,25 +8,34 @@
 
 ## 概要
 
-Cloud-Xero 個人用の Claude Code プラグイン（スキル）カタログ。自分専用のスキルを 1 つのプラグイン `xero-skills` にまとめて管理する。
+Cloud-Xero 個人用の Claude Code プラグイン（スキル）カタログ。スキルとエージェントをドメインごとに 3 プラグインに分けて管理する。
+
+- `xero-biz` — 経営・事業判断（戦略壁打ち・財務・pj-系サービス設計 / decision-reviewer・contract-reviewer・market-researcher）
+- `xero-marketing` — 集客・販促（マーケ戦略・CS設計 / ad-operations・content-seo-editor・sns-content-writer）
+- `xero-work` — 受託実務・開発補助（excel-analyze 一式・harvest 系・ai-news / proposal-writer・pm-estimator・qa-test-designer）
 
 ## リポジトリ構成
 
 ```
 ai-plugins/
-├── .claude-plugin/marketplace.json   # マーケットプレイス定義
+├── .claude-plugin/marketplace.json   # マーケットプレイス定義（3 プラグインを登録）
 └── plugins/
-    └── xero-skills/
+    ├── xero-biz/
+    ├── xero-marketing/
+    └── xero-work/                    # 3 つとも同じ構成
         ├── .claude-plugin/plugin.json
-        └── skills/
-            └── <skill-name>/
-                ├── SKILL.md        # frontmatter + INSTRUCTIONS.md への参照
-                └── INSTRUCTIONS.md # 実際の手順・知識
+        ├── skills/
+        │   └── <skill-name>/
+        │       ├── SKILL.md        # frontmatter + INSTRUCTIONS.md への参照
+        │       └── INSTRUCTIONS.md # 実際の手順・知識
+        └── agents/<agent-name>.md
 ```
 
 ## スキルを追加する
 
-`plugins/xero-skills/skills/<skill-name>/` に `SKILL.md` と `INSTRUCTIONS.md` を作成する（apsis 由来の二層構造）。`SKILL.md` は frontmatter（`name`＝ディレクトリ名 / `description`＝発火条件を具体的に）＋ `INSTRUCTIONS.md` への参照 1 行に留め、手順は `INSTRUCTIONS.md` に書く。雛形は `example-skill` を参照・コピーする。
+追加先のドメインプラグインを選び、`plugins/<plugin-name>/skills/<skill-name>/` に `SKILL.md` と `INSTRUCTIONS.md` を作成する（apsis 由来の二層構造）。`SKILL.md` は frontmatter（`name`＝ディレクトリ名 / `description`＝発火条件を具体的に）＋ `INSTRUCTIONS.md` への参照 1 行に留め、手順は `INSTRUCTIONS.md` に書く。雛形は `xero-work` の `example-skill` を参照・コピーする。
+
+スキルから委譲されるエージェントは、必ずそのスキルと同じプラグインの `agents/` に置く（プラグインをまたぐと名前空間が変わり参照が壊れやすいため）。
 
 ## 反映方法
 
@@ -34,5 +43,7 @@ Claude Code はスキルをキャッシュにコピーするため、`git pull` 
 
 ```bash
 claude plugin marketplace add "$(pwd)"
-claude plugin install xero-skills@cloud-xero-plugins
+claude plugin install xero-biz@cloud-xero-plugins
+claude plugin install xero-marketing@cloud-xero-plugins
+claude plugin install xero-work@cloud-xero-plugins
 ```

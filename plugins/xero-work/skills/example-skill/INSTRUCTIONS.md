@@ -1,6 +1,6 @@
 # example-skill
 
-これは `xero-skills` プラグインの動作確認とスキル雛形を兼ねたサンプルです。
+これはプラグインの動作確認とスキル雛形を兼ねたサンプルです（`xero-work` に置いてあります）。
 新しいスキルを追加するときは、このディレクトリをコピーして編集してください。
 
 ## スキルの構成（二層構造）
@@ -14,7 +14,7 @@
 
 ## スキルの作り方
 
-1. `plugins/xero-skills/skills/<skill-name>/` ディレクトリを作る
+1. 追加先のドメインプラグインを選び、`plugins/<plugin-name>/skills/<skill-name>/` ディレクトリを作る（xero-biz / xero-marketing / xero-work）
 2. `SKILL.md` に frontmatter を書く
    - `name`: スキルの識別子（ディレクトリ名と一致させる）
    - `description`: **いつこのスキルを使うか** を具体的に書く。Claude はこの一文だけを見て発火を判断するため、トリガーとなる状況・キーワードを明記する
@@ -25,7 +25,7 @@
 ## 呼び出し方
 
 ```
-/xero-skills:example-skill
+/xero-work:example-skill
 ```
 
-プラグイン名（`xero-skills`）がスキルの名前空間になります。
+プラグイン名（`xero-work` など）がスキルの名前空間になります。
