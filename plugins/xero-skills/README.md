@@ -50,6 +50,10 @@
 
 obsidian-tech では出力先を `input/memo/` に規約化しており、収穫ノートをそのまま記事ネタとして `/capture` の査定に回せる。
 
+## ai-news（AI業界ニュース収集）
+
+`/ai-news [期間や対象の指定]` で Anthropic / OpenAI / Google（Gemini）/ xAI（Grok）の最新ニュースを収集し、日本語解説レポートを生成する。調査・執筆は `ai-news-reporter` エージェント（`agents/ai-news-reporter.md`）に委譲。デフォルトは直近1日・4社。出力先は環境変数 `AI_NEWS_OUTPUT_DIR`（`~/.claude/settings.json` の `env` で設定、未設定なら設定を促して停止）で、ファイル名は `YYYY-MM-DD_ai-news.md`。
+
 ## 将来のアイデア
 
 - **pj-0ナビゲーター**: `pj_*` フォルダ内の成果物を見て「完了済み工程と次にやる工程」を診断するスキル。pj-3以降が揃ってから作る
