@@ -1,22 +1,22 @@
 # dashboard
 
-`plugins/` 配下のスキル・エージェントの frontmatter を読み込んで一覧表示する、公開用ダッシュボード（Next.js 静的サイト）。GitHub Actions で GitHub Pages に自動デプロイされる。
+A public dashboard (Next.js static site) that reads the frontmatter of the skills and agents under `plugins/` and lists them. Deployed automatically to GitHub Pages via GitHub Actions.
 
-公開URL: https://cloud-xero.github.io/ai-plugins/
+Public URL: https://cloud-xero.github.io/ai-plugins/
 
-## 何を表示するか
+## What it shows
 
-- リポジトリの `plugins/*/skills/*/SKILL.md` と `plugins/*/agents/*.md` を走査
-- frontmatter（`name` / `description` / `model` / `tools` / `argument-hint` / `delegates`）を抽出
-- 詳細モーダルではファイル全文（スキルは `SKILL.md` + `INSTRUCTIONS.md`）を表示・コピー可能
-- ドメイン（xero-biz / xero-marketing / xero-work）× カテゴリ（Skills / Agents / Hooks / MCP）で整理
-- 検索・種別フィルタ・ドメインフィルタ、グリッド／テーブルのビュー切替、ライト／ダーク切替
+- Scans `plugins/*/skills/*/SKILL.md` and `plugins/*/agents/*.md` in the repo
+- Extracts frontmatter (`name` / `description` / `model` / `tools` / `argument-hint` / `delegates`)
+- The detail modal shows the full file contents (for skills, `SKILL.md` + `INSTRUCTIONS.md`) and lets you copy them
+- Organized by domain (xero-biz / xero-marketing / xero-work) × category (Skills / Agents / Hooks / MCP)
+- Search, type filter, domain filter, grid/table view toggle, and light/dark toggle
 
-カテゴリは項目が 1 件以上あるときだけ表示される。hooks / MCP は現状 0 件なので出ない（プラグインに追加されれば自動で現れる。ローダーの拡張ポイントは `lib/catalog.ts` のコメント参照）。
+A category is shown only when it has at least one item. Hooks / MCP are currently empty, so they do not appear (they show up automatically once added to a plugin — see the comments in `lib/catalog.ts` for the loader's extension point).
 
-## ローカル開発
+## Local development
 
-パッケージマネージャは **pnpm**、開発ポートは **3011** に固定。
+The package manager is fixed to **pnpm** and the dev port to **3011**.
 
 ```bash
 cd dashboard
@@ -24,36 +24,36 @@ pnpm install
 pnpm dev          # http://localhost:3011
 ```
 
-## ビルド（静的エクスポート）
+## Build (static export)
 
 ```bash
-pnpm build        # out/ に静的ファイルを生成
+pnpm build        # generates static files into out/
 ```
 
-`next.config.mjs` で `output: "export"` を指定。本番ビルド時のみ `basePath: "/ai-plugins"` が付く（GitHub Pages のプロジェクトページ配信のため）。ローカルの `pnpm dev` では basePath なし。
+`next.config.mjs` sets `output: "export"`. Only production builds get `basePath: "/ai-plugins"` (for GitHub Pages project-page hosting). Local `pnpm dev` has no basePath.
 
-## デプロイ
+## Deploy
 
-`.github/workflows/deploy-dashboard.yml` が `main` への push（`plugins/**` または `dashboard/**` の変更時）で発火し、ビルドして Pages に公開する。手動実行（workflow_dispatch）も可。
+`.github/workflows/deploy-dashboard.yml` fires on push to `main` (when `plugins/**` or `dashboard/**` change), builds, and publishes to Pages. Manual runs (workflow_dispatch) are also supported.
 
-初回のみ、リポジトリの **Settings → Pages → Build and deployment → Source** を **GitHub Actions** に設定する必要がある。
+The first time only, you must set the repository's **Settings → Pages → Build and deployment → Source** to **GitHub Actions**.
 
-## 構成
+## Structure
 
 ```
 dashboard/
 ├── app/
-│   ├── globals.css     # デザイントークン + 全スタイル
-│   ├── layout.tsx      # テーマ初期化（チラつき防止スクリプト）
-│   └── page.tsx        # ビルド時に loadCatalog() を実行しデータを注入
+│   ├── globals.css     # Design tokens + all styles
+│   ├── layout.tsx      # Theme init (anti-flash script)
+│   └── page.tsx        # Runs loadCatalog() at build time and injects the data
 ├── components/
-│   └── Catalog.tsx     # 一覧・フィルタ・モーダル・テーマ切替（クライアント）
+│   └── Catalog.tsx     # List / filters / modal / theme toggle (client)
 ├── lib/
-│   ├── config.ts       # ドメイン/カテゴリの表示メタ（色・ラベル・順序）
-│   └── catalog.ts      # plugins/ を走査し frontmatter とファイル全文を読む
+│   ├── config.ts       # Domain/category display meta (color, label, order)
+│   └── catalog.ts      # Scans plugins/ and reads frontmatter + full file contents
 └── next.config.mjs
 ```
 
-## 新しいドメイン（プラグイン）を足したとき
+## When you add a new domain (plugin)
 
-`lib/config.ts` の `DOMAIN_META` と `DOMAIN_ORDER` にエントリを追加する（短い id・日本語ラベル・色トークン）。未登録のプラグインも既定色で表示はされるが、色と順番を意図通りにするならここに追記する。色トークンを増やす場合は `app/globals.css` に `--<color>` / `--<color>-tint` と `.dot.<color>` を追加する。
+Add an entry to `DOMAIN_META` and `DOMAIN_ORDER` in `lib/config.ts` (short id, label, color token). Unregistered plugins are still shown with the default color, but add them here to get the intended color and order. To add a new color token, add `--<color>` / `--<color>-tint` and `.dot.<color>` in `app/globals.css`.

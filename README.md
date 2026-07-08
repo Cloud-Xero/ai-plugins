@@ -1,35 +1,35 @@
 # ai-plugins
 
-Cloud-Xero 個人用の Claude Code プラグイン（スキル）カタログです。スキルとエージェントをドメインごとに 3 つのプラグインへ分けて管理します。
+Cloud-Xero's personal catalog of Claude Code plugins (skills). Skills and agents are split into three plugins by domain.
 
-| プラグイン | ドメイン | 中身 |
-|--------|------|------|
-| [xero-biz](./plugins/xero-biz/) | 経営・事業判断 | 事業戦略・財務・サービス設計・判断の反証・契約チェック・市場調査 |
-| [xero-marketing](./plugins/xero-marketing/) | 集客・販促 | マーケ戦略・CS設計・広告運用・SEOコンテンツ・SNS運用 |
-| [xero-work](./plugins/xero-work/) | 受託実務・開発補助 | Excel解析・提案書・工数見積・QA・収穫ノート・AIニュース |
+| Plugin | Domain | Contents |
+|--------|--------|----------|
+| [xero-biz](./plugins/xero-biz/) | Strategy & decisions | Business strategy, finance, service design, decision review, contract review, market research |
+| [xero-marketing](./plugins/xero-marketing/) | Marketing & growth | Marketing strategy, CS design, ad operations, SEO content, SNS operations |
+| [xero-work](./plugins/xero-work/) | Client work & dev | Excel analysis, proposals, effort estimation, QA, harvest notes, AI news |
 
-## ダッシュボード
+## Dashboard
 
-どんなスキル・エージェントがあるかを一覧できる公開ダッシュボードがあります。
+A public dashboard lists every skill and agent at a glance.
 
 **https://cloud-xero.github.io/ai-plugins/**
 
-`plugins/` の frontmatter から自動生成され、`main` への push で GitHub Actions が再ビルド・再デプロイします。検索・種別/ドメインフィルタ・グリッド/テーブル表示・詳細モーダル（ファイル全文のコピー）に対応。実装は [`dashboard/`](./dashboard/) を参照。
+It is generated from the frontmatter under `plugins/`, and every push to `main` triggers a GitHub Actions rebuild and redeploy. It supports search, type/domain filters, grid/table views, and a detail modal (copy the full file contents). See [`dashboard/`](./dashboard/) for the implementation.
 
-## セットアップ
+## Setup
 
 ```bash
 git clone https://github.com/Cloud-Xero/ai-plugins.git
 cd ai-plugins
 
-# マーケットプレイスを登録してプラグインをインストール（必要なものだけでも可）
+# Register the marketplace and install the plugins (install only the ones you need).
 claude plugin marketplace add "$(pwd)"
 claude plugin install xero-biz@cloud-xero-plugins
 claude plugin install xero-marketing@cloud-xero-plugins
 claude plugin install xero-work@cloud-xero-plugins
 ```
 
-## 更新
+## Updating
 
 ```bash
 git pull
@@ -38,44 +38,44 @@ claude plugin install xero-marketing@cloud-xero-plugins
 claude plugin install xero-work@cloud-xero-plugins
 ```
 
-> Claude Code はスキルをキャッシュにコピーして管理するため、`git pull` だけでは反映されません。
+> Claude Code manages skills by copying them into a cache, so `git pull` alone does not apply changes.
 
-## スキルの呼び出し方
+## Invoking a skill
 
 ```
 /<plugin-name>:<skill-name>
 ```
 
-例: `/xero-work:harvest`、`/xero-biz:biz-strategy`
+Examples: `/xero-work:harvest`, `/xero-biz:biz-strategy`
 
-## スキルを追加する
+## Adding a skill
 
-追加先のドメインプラグインを選び、`plugins/<plugin-name>/skills/<skill-name>/` に 2 ファイルを作成します（apsis 由来の二層構造）。
+Pick the domain plugin to add it to, and create two files under `plugins/<plugin-name>/skills/<skill-name>/` (the two-layer structure inherited from apsis).
 
-- `SKILL.md` — frontmatter（`name`＝ディレクトリ名 / `description`＝どんなときに使うかを具体的に）＋ `INSTRUCTIONS.md` への参照 1 行
-- `INSTRUCTIONS.md` — 実際の手順・知識
+- `SKILL.md` — frontmatter (`name` = directory name / `description` = a concrete "when to use it") plus a single reference line to `INSTRUCTIONS.md`
+- `INSTRUCTIONS.md` — the actual steps and knowledge
 
-雛形は [example-skill](./plugins/xero-work/skills/example-skill/) をコピーして使ってください。
+Copy [example-skill](./plugins/xero-work/skills/example-skill/) as a template.
 
-スキルから委譲されるエージェントは、そのスキルと**同じプラグイン**の `agents/` に置きます。
+Agents delegated from a skill go in the `agents/` of the **same plugin** as that skill.
 
-## 構成
+## Structure
 
 ```
 ai-plugins/
 ├── .claude-plugin/
-│   └── marketplace.json          # マーケットプレイス定義
+│   └── marketplace.json          # Marketplace definition
 ├── plugins/
 │   ├── xero-biz/
 │   │   ├── .claude-plugin/plugin.json
 │   │   ├── skills/<skill-name>/
-│   │   │   ├── SKILL.md          # frontmatter + INSTRUCTIONS.md への参照
-│   │   │   └── INSTRUCTIONS.md   # 実際の手順・知識
+│   │   │   ├── SKILL.md          # frontmatter + reference to INSTRUCTIONS.md
+│   │   │   └── INSTRUCTIONS.md   # actual steps and knowledge
 │   │   └── agents/<agent-name>.md
-│   ├── xero-marketing/           # 同上
-│   └── xero-work/                # 同上
+│   ├── xero-marketing/           # same as above
+│   └── xero-work/                # same as above
 ├── CLAUDE.md
 └── README.md
 ```
 
-各プラグインのスキル/エージェント一覧は、それぞれの README を参照してください。
+For the full list of skills/agents per plugin, see each plugin's README.
