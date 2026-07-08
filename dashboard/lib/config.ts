@@ -14,9 +14,9 @@ export type DomainMeta = {
 
 /** プラグインディレクトリ名 → 表示メタ */
 export const DOMAIN_META: Record<string, DomainMeta> = {
-  "xero-biz": { id: "biz", label: "xero-biz", desc: "経営・事業判断", color: "biz" },
-  "xero-marketing": { id: "marketing", label: "xero-marketing", desc: "集客・販促", color: "mkt" },
-  "xero-work": { id: "work", label: "xero-work", desc: "受託実務・開発補助", color: "work" },
+  "xero-biz": { id: "biz", label: "xero-biz", desc: "Strategy & decisions", color: "biz" },
+  "xero-marketing": { id: "marketing", label: "xero-marketing", desc: "Marketing & growth", color: "mkt" },
+  "xero-work": { id: "work", label: "xero-work", desc: "Client work & dev", color: "work" },
 };
 
 /** ドメインの表示順（DOMAIN_META に無いプラグインは後ろに続ける） */
@@ -35,8 +35,8 @@ export type CategoryMeta = {
 
 // カテゴリ = セクションの単位。0件のカテゴリは UI 側でセクションごと非表示にする。
 export const CATEGORIES: CategoryMeta[] = [
-  { kind: "skill", label: "スキル", head: "Skills", statLabel: "skills", tag: "SKILL" },
-  { kind: "agent", label: "エージェント", head: "Agents", statLabel: "agents", tag: "AGENT" },
-  { kind: "hook", label: "フック", head: "Hooks", statLabel: "hooks", tag: "HOOK" },
+  { kind: "skill", label: "Skills", head: "Skills", statLabel: "skills", tag: "SKILL" },
+  { kind: "agent", label: "Agents", head: "Agents", statLabel: "agents", tag: "AGENT" },
+  { kind: "hook", label: "Hooks", head: "Hooks", statLabel: "hooks", tag: "HOOK" },
   { kind: "mcp", label: "MCP", head: "MCP", statLabel: "mcp", tag: "MCP" },
 ];

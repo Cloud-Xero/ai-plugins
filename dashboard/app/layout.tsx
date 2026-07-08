@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "xero plugin catalog",
   description:
-    "Cloud-Xero 個人用 Claude Code プラグインカタログ。スキル・エージェントを frontmatter から一覧化。",
+    "Cloud-Xero's personal Claude Code plugin catalog. Skills and agents listed from their frontmatter.",
 };
 
 // ハイドレーション前にテーマを確定させてチラつきを防ぐ。
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja">
+    <html lang="en">
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

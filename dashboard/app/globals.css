@@ -71,6 +71,7 @@ header { padding: 44px 0 30px; }
 h1 { font-family: var(--font-mono); font-size: clamp(30px, 5vw, 44px); font-weight: 600; letter-spacing: -0.02em; margin: 0 0 12px; text-wrap: balance; }
 h1 .slash { color: var(--ink-faint); font-weight: 400; }
 .lede { max-width: 60ch; color: var(--ink-soft); font-size: 15px; margin: 0 0 28px; }
+.nowrap { white-space: nowrap; }
 .stats { display: flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); overflow: hidden; width: fit-content; }
 .stat { padding: 12px 22px; border-right: 1px solid var(--line); }
 .stat:last-child { border-right: 0; }

@@ -74,7 +74,7 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button className={`copy${state === "done" ? " done" : ""}`} onClick={onClick} type="button">
       <CopyIcon />
-      <span>{state === "done" ? "コピーしました" : state === "fail" ? "コピー失敗" : "コピー"}</span>
+      <span>{state === "done" ? "Copied" : state === "fail" ? "Failed" : "Copy"}</span>
     </button>
   );
 }
@@ -90,14 +90,14 @@ function Detail({
 }) {
   const cat = CATEGORIES.find((c) => c.kind === item.kind)!;
   const meta: [string, React.ReactNode][] = [
-    ["プラグイン", dm.label],
-    ["ファイル", item.files.map((f) => <code key={f.filename}>{f.filename}&nbsp; </code>)],
+    ["Plugin", dm.label],
+    ["Files", item.files.map((f) => <code key={f.filename}>{f.filename}&nbsp; </code>)],
   ];
-  if (item.argHint) meta.push(["引数", <code>{item.argHint}</code>]);
-  if (item.model) meta.push(["モデル", <ModelBadge model={item.model} />]);
+  if (item.argHint) meta.push(["Args", <code>{item.argHint}</code>]);
+  if (item.model) meta.push(["Model", <ModelBadge model={item.model} />]);
   if (item.tools)
     meta.push([
-      "ツール",
+      "Tools",
       <span className="chips">
         {item.tools.map((t) => (
           <span className="chip" key={t}>{t}</span>
@@ -106,7 +106,7 @@ function Detail({
     ]);
   if (item.delegates)
     meta.push([
-      "委譲先",
+      "Delegates",
       <span className="chips">
         {item.delegates.map((x) => (
           <span className="chip dl" key={x}>{x}</span>
@@ -123,7 +123,7 @@ function Detail({
               <span className={`dot ${dm.color}`} />
               {dm.label} · {cat.head}
             </div>
-            <button className="m-close" aria-label="閉じる" onClick={onClose} type="button" autoFocus>
+            <button className="m-close" aria-label="Close" onClick={onClose} type="button" autoFocus>
               ×
             </button>
           </div>
@@ -270,9 +270,13 @@ export default function Catalog({ domains, items }: Props) {
           <span className="slash">xero</span> plugin catalog
         </h1>
         <p className="lede">
-          Cloud-Xero 個人用 Claude Code プラグインカタログ。スキルとエージェントを{" "}
-          {domains.length} つのドメインに分けて管理しています。カード＝リポジトリの{" "}
-          <code>SKILL.md</code> / <code>agents/*.md</code> の frontmatter から生成。
+          Cloud-Xero&apos;s personal Claude Code plugin catalog, with skills and
+          agents split across {domains.length} domains. Each card is generated
+          from the frontmatter of{" "}
+          <span className="nowrap">
+            <code>SKILL.md</code> / <code>agents/*.md</code>
+          </span>{" "}
+          in the repo.
         </p>
         <div className="stats">
           {stats.map((s) => (
@@ -293,17 +297,17 @@ export default function Catalog({ domains, items }: Props) {
             </svg>
             <input
               type="search"
-              placeholder="名前・説明・ツールで検索…"
+              placeholder="Search by name, description, or tool…"
               autoComplete="off"
-              aria-label="検索"
+              aria-label="Search"
               value={q}
               onChange={(e) => setQ(e.target.value)}
             />
           </label>
 
-          <div className="seg" role="group" aria-label="種別フィルタ">
+          <div className="seg" role="group" aria-label="Filter by type">
             <button aria-pressed={kind === "all"} onClick={() => setKind("all")} type="button">
-              すべて
+              All
             </button>
             {presentCats.map((c) => (
               <button key={c.kind} aria-pressed={kind === c.kind} onClick={() => setKind(c.kind)} type="button">
@@ -312,9 +316,9 @@ export default function Catalog({ domains, items }: Props) {
             ))}
           </div>
 
-          <div className="seg" role="group" aria-label="ドメインフィルタ">
+          <div className="seg" role="group" aria-label="Filter by domain">
             <button aria-pressed={dom === "all"} onClick={() => setDom("all")} type="button">
-              すべて
+              All
             </button>
             {domains.map((d) => (
               <button key={d.id} aria-pressed={dom === d.id} onClick={() => setDom(d.id)} type="button">
@@ -324,21 +328,21 @@ export default function Catalog({ domains, items }: Props) {
             ))}
           </div>
 
-          <div className="seg" id="viewseg" role="group" aria-label="表示切替">
-            <button aria-pressed={view === "grid"} onClick={() => setView("grid")} type="button" title="グリッド表示">
+          <div className="seg" id="viewseg" role="group" aria-label="Toggle view">
+            <button aria-pressed={view === "grid"} onClick={() => setView("grid")} type="button" title="Grid view">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="3" y="3" width="8" height="8" rx="1" />
                 <rect x="13" y="3" width="8" height="8" rx="1" />
                 <rect x="3" y="13" width="8" height="8" rx="1" />
                 <rect x="13" y="13" width="8" height="8" rx="1" />
               </svg>
-              グリッド
+              Grid
             </button>
-            <button aria-pressed={view === "table"} onClick={() => setView("table")} type="button" title="テーブル表示">
+            <button aria-pressed={view === "table"} onClick={() => setView("table")} type="button" title="Table view">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M3 5h18M3 12h18M3 19h18" />
               </svg>
-              テーブル
+              Table
             </button>
           </div>
 
@@ -346,8 +350,8 @@ export default function Catalog({ domains, items }: Props) {
             className="iconbtn"
             onClick={toggleTheme}
             type="button"
-            aria-label={theme === "dark" ? "ライトテーマに切替" : "ダークテーマに切替"}
-            title="テーマ切替"
+            aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+            title="Toggle theme"
           >
             {theme === "dark" ? (
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -366,7 +370,7 @@ export default function Catalog({ domains, items }: Props) {
       <main className="wrap">
         {visible.length === 0 ? (
           <p className="empty" style={{ display: "block" }}>
-            no matches — 検索条件に一致する項目がありません。
+            no matches — nothing fits the current filters.
           </p>
         ) : view === "grid" ? (
           <div id="view-grid">
@@ -420,10 +424,10 @@ export default function Catalog({ domains, items }: Props) {
                 </colgroup>
                 <thead>
                   <tr>
-                    <th>種別</th>
-                    <th>名前</th>
-                    <th>ドメイン</th>
-                    <th>説明</th>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Domain</th>
+                    <th>Description</th>
                   </tr>
                 </thead>
                 <tbody>
