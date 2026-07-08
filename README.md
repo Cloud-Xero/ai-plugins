@@ -8,6 +8,14 @@ Cloud-Xero 個人用の Claude Code プラグイン（スキル）カタログ�
 | [xero-marketing](./plugins/xero-marketing/) | 集客・販促 | マーケ戦略・CS設計・広告運用・SEOコンテンツ・SNS運用 |
 | [xero-work](./plugins/xero-work/) | 受託実務・開発補助 | Excel解析・提案書・工数見積・QA・収穫ノート・AIニュース |
 
+## ダッシュボード
+
+どんなスキル・エージェントがあるかを一覧できる公開ダッシュボードがあります。
+
+**https://cloud-xero.github.io/ai-plugins/**
+
+`plugins/` の frontmatter から自動生成され、`main` への push で GitHub Actions が再ビルド・再デプロイします。検索・種別/ドメインフィルタ・グリッド/テーブル表示・詳細モーダル（ファイル全文のコピー）に対応。実装は [`dashboard/`](./dashboard/) を参照。
+
 ## セットアップ
 
 ```bash
