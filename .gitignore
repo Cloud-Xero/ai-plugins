@@ -10,3 +10,8 @@ dist/
 
 # OS
 .DS_Store
+
+# youtube-digest skill runtime data
+plugins/xero-work/skills/youtube-digest/.venv/
+plugins/xero-work/skills/youtube-digest/transcripts/
+plugins/xero-work/skills/youtube-digest/pending.json
