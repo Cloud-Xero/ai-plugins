@@ -10,12 +10,34 @@
 
 ```bash
 python3 -c "
-import json, glob, os
+import json, glob, os, shlex
 
-# カレントプロジェクトに対応する transcript ディレクトリを特定する
-project_dir = os.path.expanduser('~/.claude/projects/' + os.getcwd().replace('/', '-'))
+# カレントプロジェクトに対応する transcript ディレクトリを特定する（'/' と '.' はどちらも '-' に置換される）
+project_dir = os.path.expanduser('~/.claude/projects/' + os.getcwd().replace('/', '-').replace('.', '-'))
 files = sorted(glob.glob(project_dir + '/*.jsonl'), key=os.path.getmtime)
 path = files[-1]  # 直近（=現在のセッション）のファイル
+
+def split_subcommands(cmd):
+    # ';' '&&' '||' '|' '&' で連結された複合コマンドは、権限チェックがサブコマンドごとに
+    # 個別に走る。1件の tool_use にまとめて出力すると見落とすので分解する。
+    try:
+        lex = shlex.shlex(cmd, posix=True, punctuation_chars=True)
+        lex.whitespace_split = True
+        tokens = list(lex)
+    except ValueError:
+        return [cmd]
+    seps = {';', '&&', '||', '|', '&'}
+    subs, cur = [], []
+    for t in tokens:
+        if t in seps:
+            if cur:
+                subs.append(' '.join(cur))
+            cur = []
+        else:
+            cur.append(t)
+    if cur:
+        subs.append(' '.join(cur))
+    return subs
 
 with open(path) as f:
     for line in f:
@@ -33,18 +55,20 @@ with open(path) as f:
             if isinstance(block, dict) and block.get('type') == 'tool_use':
                 name = block.get('name')
                 if name == 'Bash':
-                    print('Bash:', block.get('input', {}).get('command', '').replace(chr(10), ' \\\\n '))
+                    cmd = block.get('input', {}).get('command', '')
+                    for sub in split_subcommands(cmd):
+                        print('Bash:', sub)
                 elif name and name.startswith('mcp__'):
                     print('MCP:', name)
 "
 ```
 
-`~/.claude/projects/<カレントディレクトリを-区切りにした名前>/` 配下の最新の `.jsonl` が現在のセッションのトランスクリプト。カレントディレクトリがセッション開始時と異なる場合は、対象プロジェクトのディレクトリ名で探し直す。
+`~/.claude/projects/<カレントディレクトリの '/' と '.' を '-' に置換した名前>/` 配下の最新の `.jsonl` が現在のセッションのトランスクリプト。カレントディレクトリがセッション開始時と異なる場合は、対象プロジェクトのディレクトリ名で探し直す。
 
 抽出結果から、以下を候補とする。
 
-- Bash コマンドのうち、読み取り専用でない・標準の自動許可対象でないもの
-- 読み取り専用でも `git log` / `git show` / `grep` / `cat` / `ls` のように繰り返し使われている汎用コマンド（除外せず候補に含める）
+- サブコマンドのうち、読み取り専用でない・標準の自動許可対象でないもの
+- 読み取り専用でも `git log` / `git show` / `grep` / `cat` / `ls` / `head` / `tail` のように繰り返し使われている汎用コマンド（除外せず候補に含める）
 - ユーザーに一度拒否されて言い換えたコマンド、承認待ちで止まったコマンド
 - MCP ツール（`mcp__server__tool` 形式）や WebFetch など、Bash 以外で確認が入ったもの
 
