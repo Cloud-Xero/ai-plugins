@@ -6,9 +6,45 @@
 
 ### 1. セッション内の候補を洗い出す
 
-現在の会話を振り返り、許可確認の対象になったと思われるツール呼び出しを列挙する。
+記憶を頼りに列挙しない。現在のセッションのトランスクリプト（jsonl）を機械的に読み、実行した Bash コマンドを漏れなく抽出する。
 
-- 自分（Claude）が実行した Bash コマンドのうち、読み取り専用でない・標準の自動許可対象でないもの
+```bash
+python3 -c "
+import json, glob, os
+
+# カレントプロジェクトに対応する transcript ディレクトリを特定する
+project_dir = os.path.expanduser('~/.claude/projects/' + os.getcwd().replace('/', '-'))
+files = sorted(glob.glob(project_dir + '/*.jsonl'), key=os.path.getmtime)
+path = files[-1]  # 直近（=現在のセッション）のファイル
+
+with open(path) as f:
+    for line in f:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            obj = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        content = obj.get('message', {}).get('content')
+        if not isinstance(content, list):
+            continue
+        for block in content:
+            if isinstance(block, dict) and block.get('type') == 'tool_use':
+                name = block.get('name')
+                if name == 'Bash':
+                    print('Bash:', block.get('input', {}).get('command', '').replace(chr(10), ' \\\\n '))
+                elif name and name.startswith('mcp__'):
+                    print('MCP:', name)
+"
+```
+
+`~/.claude/projects/<カレントディレクトリを-区切りにした名前>/` 配下の最新の `.jsonl` が現在のセッションのトランスクリプト。カレントディレクトリがセッション開始時と異なる場合は、対象プロジェクトのディレクトリ名で探し直す。
+
+抽出結果から、以下を候補とする。
+
+- Bash コマンドのうち、読み取り専用でない・標準の自動許可対象でないもの
+- 読み取り専用でも `git log` / `git show` / `grep` / `cat` / `ls` のように繰り返し使われている汎用コマンド（除外せず候補に含める）
 - ユーザーに一度拒否されて言い換えたコマンド、承認待ちで止まったコマンド
 - MCP ツール（`mcp__server__tool` 形式）や WebFetch など、Bash 以外で確認が入ったもの
 
