@@ -271,8 +271,9 @@ export default function Catalog({ domains, items }: Props) {
         </h1>
         <p className="lede">
           Cloud-Xero&apos;s personal Claude Code plugin catalog, with skills and
-          agents split across {domains.length} domains. Each card is generated
-          from the frontmatter of{" "}
+          agents split across {domains.length} domains.
+          <br />
+          Each card is generated from the frontmatter of{" "}
           <span className="nowrap">
             <code>SKILL.md</code> / <code>agents/*.md</code>
           </span>{" "}
