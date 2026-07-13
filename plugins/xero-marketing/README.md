@@ -15,7 +15,6 @@
 |--------|------|
 | `ad-operations` | Web広告のキャンペーン設計・広告文量産・成果分析 |
 | `content-seo-editor` | 集客記事の企画・構成・SEO最適化 |
-| `sns-content-writer` | SNS投稿の企画・量産・カレンダー設計 |
 
 ## 関連
 
