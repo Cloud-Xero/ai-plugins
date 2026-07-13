@@ -8,6 +8,7 @@
 |--------|------|
 | `/biz-strategy` | 事業戦略の壁打ち（注力/撤退・優先順位・リソース配分） |
 | `/finance-advisor` | 個人事業主の財務・会計相談（資金繰り・単価・法人化） |
+| `/market-research` | 市場空白の並列調査（構築期間1日/1週間/1ヶ月の3トラック＋反証役で market-researcher へ委譲）→ `market_research/<日付>/` |
 | `/pj-1-service-design` | 新規サービス設計 → `pj_*/01_service-definition.md` |
 | `/pj-2-business-model` | ビジネスモデル設計 → `pj_*/02_business-model.md` |
 
