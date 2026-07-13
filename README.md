@@ -6,7 +6,7 @@ Cloud-Xero's personal catalog of Claude Code plugins (skills). Skills and agents
 |--------|--------|----------|
 | [xero-biz](./plugins/xero-biz/) | Strategy & decisions | Business strategy, finance, service design, decision review, contract review, market research |
 | [xero-marketing](./plugins/xero-marketing/) | Marketing & growth | Marketing strategy, CS design, ad operations, SEO content, SNS operations |
-| [xero-work](./plugins/xero-work/) | Client work & dev | Excel analysis, proposals, effort estimation, QA, harvest notes, AI news |
+| [xero-work](./plugins/xero-work/) | Client work & dev | Excel analysis, proposals, effort estimation, QA, AI news |
 
 ## Dashboard
 
@@ -46,7 +46,7 @@ claude plugin install xero-work@cloud-xero-plugins
 /<plugin-name>:<skill-name>
 ```
 
-Examples: `/xero-work:harvest`, `/xero-biz:biz-strategy`
+Examples: `/xero-work:excel-analyze`, `/xero-biz:biz-strategy`
 
 ## Adding a skill
 

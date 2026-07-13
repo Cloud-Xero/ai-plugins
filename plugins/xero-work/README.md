@@ -7,10 +7,7 @@
 | スキル | 説明 |
 |--------|------|
 | `/excel-analyze` | Excelブックの解析パイプライン（4エージェント直列起動） |
-| `/harvest` | 現在のセッションから収穫ノートを抽出・保存 |
-| `/harvest-docs` | プロジェクト内 docs から収穫ノートを生成 |
 | `/ai-news` | AI業界ニュースの収集・日本語解説レポート生成 |
-| `/allow-perms` | セッション中の permission prompt を allowlist に追加 |
 | `/example-skill` | 新スキル作成用の雛形サンプル |
 
 ## エージェント
@@ -38,12 +35,6 @@
 | 4. 回帰テスト用スナップショット | `excel-snapshot` | `04_snapshot.json` / `04_test-cases.md` |
 
 エージェント定義は `agents/`、オーケストレーションは `skills/excel-analyze/` にある。
-
-## harvest（セッション収穫）
-
-`/harvest [出力先]` で現在のセッションから「やったこと・設計判断・ハマり→解決・申し送り」を収穫ノート1ファイル（`yyyymmdd_{slug}.md`）に抽出する汎用スキル。出力先は 引数 > プロジェクトCLAUDE.mdの `harvest` 規約 > `./docs/harvest/` の順で解決する。テンプレートは `skills/harvest/note-template.md`。
-
-obsidian-tech では出力先を `input/memo/` に規約化しており、収穫ノートをそのまま記事ネタとして `/capture` の査定に回せる。
 
 ## ai-news（AI業界ニュース収集）
 
