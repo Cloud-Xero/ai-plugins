@@ -7,7 +7,6 @@
 | スキル | 説明 |
 |--------|------|
 | `/excel-analyze` | Excelブックの解析パイプライン（4エージェント直列起動） |
-| `/ai-news` | AI業界ニュースの収集・日本語解説レポート生成 |
 | `/example-skill` | 新スキル作成用の雛形サンプル |
 
 ## エージェント
@@ -21,7 +20,6 @@
 | `proposal-writer` | 受託案件の提案書・見積ドラフト作成 |
 | `pm-estimator` | 工数見積・WBS・スケジュール・リスク分解 |
 | `qa-test-designer` | テスト観点洗い出し・テストケース設計 |
-| `ai-news-reporter` | AI業界ニュースの調査・執筆（ai-news から委譲） |
 
 ## excel-analyze（Excel解析パイプライン）
 
@@ -35,7 +33,3 @@
 | 4. 回帰テスト用スナップショット | `excel-snapshot` | `04_snapshot.json` / `04_test-cases.md` |
 
 エージェント定義は `agents/`、オーケストレーションは `skills/excel-analyze/` にある。
-
-## ai-news（AI業界ニュース収集）
-
-`/ai-news [期間や対象の指定]` で Anthropic / OpenAI / Google（Gemini）/ xAI（Grok）の最新ニュースを収集し、日本語解説レポートを生成する。調査・執筆は `ai-news-reporter` エージェント（`agents/ai-news-reporter.md`）に委譲。デフォルトは直近1日・4社。出力先は環境変数 `AI_NEWS_OUTPUT_DIR`（`~/.claude/settings.json` の `env` で設定、未設定なら設定を促して停止）で、ファイル名は `YYYY-MM-DD_ai-news.md`。

@@ -12,7 +12,7 @@ Cloud-Xero 個人用の Claude Code プラグイン（スキル）カタログ�
 
 - `xero-biz` — 経営・事業判断（戦略壁打ち・財務・pj-系サービス設計 / decision-reviewer・contract-reviewer・market-researcher）
 - `xero-marketing` — 集客・販促（マーケ戦略・CS設計 / ad-operations・content-seo-editor・sns-content-writer）
-- `xero-work` — 受託実務・開発補助（excel-analyze 一式・ai-news / proposal-writer・pm-estimator・qa-test-designer）
+- `xero-work` — 受託実務・開発補助（excel-analyze 一式 / proposal-writer・pm-estimator・qa-test-designer）
 
 ## リポジトリ構成
 
