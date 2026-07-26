@@ -47,3 +47,30 @@ claude plugin install xero-biz@cloud-xero-plugins
 claude plugin install xero-marketing@cloud-xero-plugins
 claude plugin install xero-work@cloud-xero-plugins
 ```
+
+さらに、Claude Code は **`version` の文字列をキャッシュキーにしている**。`plugin.json` の `version` を上げない限り、コミットを push しても利用者には変更が届かない（`/plugin update` は "already at the latest version" を返す）。
+
+## バージョンの自動 bump
+
+`version` の上げ忘れを防ぐため、`plugins/` 配下に変更があったプラグインの `version` をコミット時に自動で上げる git フックを用意している。clone 後に一度だけ設定する。
+
+```bash
+git config core.hooksPath .githooks
+```
+
+bump 種別はコミットメッセージのプレフィックスで決まる。
+
+| メッセージ | bump |
+|---|---|
+| `feat!:` / `fix(scope)!:` / 本文に `BREAKING CHANGE:` | major |
+| `feat:` | minor |
+| その他（`fix:` `docs:` `chore:` `refactor:` …） | patch |
+
+変更のあったプラグインだけが対象で、`plugin.json` と `.claude-plugin/marketplace.json` の両方が同じ値に更新され、直前のコミットに `--amend` で同梱される。次の場合は自動 bump をスキップする。
+
+- そのコミットで既に `version` を手で変更している（minor / major を明示したいときはこれを使う）
+- `plugin.json` がそのコミットで新規追加された（初期バージョンを尊重する）
+- merge / rebase / cherry-pick の途中
+- ステージに他の変更が残っている（`git commit -- <path>` のようなパス指定コミット）。`--amend` すると残りの変更まで巻き込むため、`version` の更新は作業ツリーに残して中止する
+
+一時的に無効化したいときは `SKIP_PLUGIN_BUMP=1 git commit ...` とする。

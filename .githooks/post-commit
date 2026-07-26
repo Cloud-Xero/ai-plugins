@@ -1,0 +1,54 @@
+#!/bin/sh
+# plugins/ 配下に変更があったプラグインの version を自動 bump し、
+# 直前のコミットに --amend で同梱する。
+#
+# post-commit を使う理由: bump 種別をコミットメッセージから判定したいが、
+# prepare-commit-msg / commit-msg の時点では既にツリーが確定していて、
+# フック内の git add がそのコミットに反映されないため。
+#
+# 一時的に無効化したいときは SKIP_PLUGIN_BUMP=1 git commit ...
+
+[ -n "$SKIP_PLUGIN_BUMP" ] && exit 0
+
+GIT_DIR_PATH=$(git rev-parse --git-dir) || exit 0
+
+# merge / rebase / cherry-pick の途中は履歴を触らない
+for marker in MERGE_HEAD CHERRY_PICK_HEAD REVERT_HEAD rebase-merge rebase-apply; do
+	if [ -e "$GIT_DIR_PATH/$marker" ]; then
+		exit 0
+	fi
+done
+
+ROOT=$(git rev-parse --show-toplevel) || exit 0
+SCRIPT="$ROOT/.githooks/bump-plugin-versions.py"
+[ -f "$SCRIPT" ] || exit 0
+
+if command -v python3 >/dev/null 2>&1; then
+	PYTHON=python3
+elif [ -x /usr/bin/python3 ]; then
+	PYTHON=/usr/bin/python3
+else
+	echo "[bump] python3 が見つからないためスキップしました" >&2
+	exit 0
+fi
+
+CHANGED=$("$PYTHON" "$SCRIPT") || exit 0
+[ -z "$CHANGED" ] && exit 0
+
+# ステージ済みの変更が残っている状態で amend すると、それごと直前のコミットに
+# 巻き込んでしまう。`git commit -- <path>` や `git commit --only` のような
+# pathspec 付きコミットでは、コミット後もインデックスに他の変更が残る。
+if ! git diff --cached --quiet HEAD; then
+	echo "[bump] ステージ済みの変更が残っているため amend を中止しました" >&2
+	echo "[bump] version の変更は作業ツリーに残しています" >&2
+	exit 0
+fi
+
+echo "$CHANGED" | while IFS= read -r path; do
+	[ -n "$path" ] && git add -- "$path"
+done
+
+# amend 中に再びこのフックが走らないようガードする
+SKIP_PLUGIN_BUMP=1 git commit -q --amend --no-edit --no-verify
+
+exit 0
