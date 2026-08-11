@@ -1,6 +1,6 @@
 ---
 name: refactor-verifier
-description: refactor-implementer が push したリファクタリングブランチを「挙動不変」の観点で検証するチェッカー。ブランチ名・計画ファイルパス・PR ステップ・リポジトリ事実（検証コマンド・制約リスト等）を受け取り、git worktree 隔離の中で diff レビューと検証コマンドの再実行を行い、PASS / FAIL と指摘リストを返す。refactor-page スキル（オーケストレータ）から implementer の直後に isolation: worktree で呼ばれる。コードの修正はしない（修正は implementer の仕事）。
+description: "refactor-implementer が push したリファクタリングブランチを「挙動不変」の観点で検証するチェッカー。ブランチ名・計画ファイルパス・PR ステップ・リポジトリ事実（検証コマンド・制約リスト等）を受け取り、git worktree 隔離の中で diff レビューと検証コマンドの再実行を行い、PASS / FAIL と指摘リストを返す。refactor-page スキル（オーケストレータ）から implementer の直後に isolation: worktree で呼ばれる。コードの修正はしない（修正は implementer の仕事）。"
 tools: Read, Glob, Grep, Bash
 model: inherit
 ---
