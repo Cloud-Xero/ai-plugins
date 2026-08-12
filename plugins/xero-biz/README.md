@@ -8,8 +8,8 @@
 |--------|------|
 | `/biz-strategy` | 事業戦略の壁打ち（注力/撤退・優先順位・リソース配分） |
 | `/finance-advisor` | 個人事業主の財務・会計相談（資金繰り・単価・法人化） |
-| `/pj-1-service-design` | 新規サービス設計 → `pj_*/01_service-definition.md` |
-| `/pj-2-business-model` | ビジネスモデル設計 → `pj_*/02_business-model.md` |
+| `/market-research` | ニッチ探索（構築期間別3トラックの並列web調査） |
+| `/pj-1-research` 〜 `/pj-6-execution-plan` | サービス開発の6工程（下記「pj-系スキル群」参照） |
 
 ## エージェント
 
@@ -21,21 +21,23 @@
 
 ## pj-系スキル群
 
-サービス開発を段階的に進めるためのスキルセット。
-命名規則は **`pj-<工程番号>-<工程名>`**（例: `/pj-1-service-design`）。番号が工程の順序を表す。
+サービス開発を「要件 → 設計 → 計画」の順で段階的に進めるためのスキルセット。
+命名規則は **`pj-<工程番号>-<工程名>`**（例: `/pj-2-concept`）。番号が工程の順序を表す。
 
 ### ワークフローと実装状況
 
-| 工程 | スキル | 出力 | 状況 |
-|---|---|---|---|
-| 1. サービス設計 | `/pj-1-service-design` | `pj_<name>/01_service-definition.md` | ✅ |
-| 2. ビジネスモデル | `/pj-2-business-model` | `pj_<name>/02_business-model.md` | ✅ |
-| 3. MVP定義 | `/pj-3-mvp` | `pj_<name>/03_mvp-definition.md` | 未実装 |
-| 4. ユーザーストーリー | `/pj-4-user-story` | `pj_<name>/04_user-story.md` | 未実装 |
-| 5. 技術設計 | `/pj-5-tech-stack` | `pj_<name>/05_tech-stack.md` | 未実装 |
-| 8. マーケティング | `/pj-7-marketing` | （未定） | 未実装 |
+| 工程 | スキル | 決めること | 出力 | 状況 |
+|---|---|---|---|---|
+| 1. 市場調査 | `/pj-1-research` | 需要・競合・相場・空白（market-researcher へ委譲） | `pj_<name>/01_research.md` | ✅ |
+| 2. コンセプト設計 | `/pj-2-concept` | 誰の・どんな課題を・どんな価値で | `pj_<name>/02_concept.md` | ✅ |
+| 3. サービス戦略 | `/pj-3-strategy` | ポジショニング・差別化・勝ち筋・やらないこと | `pj_<name>/03_strategy.md` | ✅ |
+| 4. 事業設計 | `/pj-4-business-model` | 最終ゴール金額からの逆算・収益・価格・マイルストーン | `pj_<name>/04_business-model.md` | ✅ |
+| 5. 仕様設計 | `/pj-5-spec` | 情報設計・機能・コンテンツ・技術構成（「実装して」と言える状態） | `pj_<name>/05_service-spec.md` | ✅ |
+| 6. 実行計画 | `/pj-6-execution-plan` | MVPスコープ・タスク分解・検証の判定日 | `pj_<name>/06_execution-plan.md` | ✅ |
 
-工程6〜9（開発・検証・ローンチ・改善）は汎用スキル（`/commit` 等）やClaude Code本体で対応し、専用スキルは必要になったら追加する。
+構築・ローンチ・計測は専用スキルを持たず、pj-6 の実行計画から既存の専門スキル（frontend系・marketing-strategy・content-seo-editor・seo-audit 等）へ振り分ける。
+
+**旧構成からの変更（2026-08）:** 旧 `/pj-1-service-design` は `/pj-2-concept` に、旧 `/pj-2-business-model` は `/pj-4-business-model` に改名。旧 pj-1 は要件（コンセプト）定義であって仕様設計ではないため、「設計した気になって実装に進めない」ギャップを埋める工程（1・3・5・6）を追加した。
 
 ### 出力先の規約
 
@@ -45,9 +47,10 @@
 
 ### セットとしての設計
 
-- 各スキルのdescriptionに前後工程への参照を明記する（例: pj-1は「後工程は /pj-2-business-model」）
+- 各スキルのdescriptionに前後工程への参照を明記する（例: pj-2は「後工程は /pj-3-strategy」）
+- 前工程の成果物がない場合は「案内はするが強制しない」（途中の工程から始められる）
 - 新しい工程スキルを追加するときは、この表と前後スキルのdescriptionを更新すること
 
 ## 将来のアイデア
 
-- **pj-0ナビゲーター**: `pj_*` フォルダ内の成果物を見て「完了済み工程と次にやる工程」を診断するスキル。pj-3以降が揃ってから作る
+- **pj-0ナビゲーター**: `pj_*` フォルダ内の成果物を見て「完了済み工程と次にやる工程」を診断するスキル（1〜6が揃った今、作れる状態になった）
