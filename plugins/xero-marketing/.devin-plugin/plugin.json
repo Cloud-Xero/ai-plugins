@@ -1,0 +1,9 @@
+{
+  "name": "xero-marketing",
+  "description": "Marketing, customer success, and content creation skills",
+  "version": "0.2.0",
+  "author": {
+    "name": "Cloud-Xero"
+  },
+  "skills": "skills"
+}

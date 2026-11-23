@@ -1,6 +1,6 @@
 # ai-plugins
 
-Cloud-Xero's personal catalog of Claude Code plugins (skills). Skills and agents are split into three plugins by domain.
+Cloud-Xero's personal catalog of AI agent plugins (skills) for Claude Code and Devin. Skills and agents are split into three plugins by domain.
 
 | Plugin | Domain | Contents |
 |--------|--------|----------|
@@ -40,6 +40,24 @@ claude plugin install xero-work@cloud-xero-plugins
 
 > Claude Code manages skills by copying them into a cache, so `git pull` alone does not apply changes.
 
+## Using with Devin CLI
+
+Each plugin also has a `.devin-plugin/plugin.json`, so it can be installed as a Devin plugin. It shares the same `skills/` and `agents/` as the Claude Code plugin.
+
+```bash
+# Install from GitHub
+devin plugins install Cloud-Xero/ai-plugins#plugins/xero-biz
+devin plugins install Cloud-Xero/ai-plugins#plugins/xero-marketing
+devin plugins install Cloud-Xero/ai-plugins#plugins/xero-work
+
+# From a local clone
+devin plugins install --local ./plugins/xero-biz
+devin plugins install --local ./plugins/xero-marketing
+devin plugins install --local ./plugins/xero-work
+```
+
+Skills are invoked as `/xero-work:excel-analyze`, the same as in Claude Code. Bundled agents can be referenced as `xero-work:excel-inventory` (for local Devin sessions).
+
 ## Invoking a skill
 
 ```
@@ -67,7 +85,8 @@ ai-plugins/
 │   └── marketplace.json          # Marketplace definition
 ├── plugins/
 │   ├── xero-biz/
-│   │   ├── .claude-plugin/plugin.json
+│   │   ├── .claude-plugin/plugin.json   # Claude Code manifest
+│   │   ├── .devin-plugin/plugin.json    # Devin manifest (shares skills/ and agents/)
 │   │   ├── skills/<skill-name>/
 │   │   │   ├── SKILL.md          # frontmatter + reference to INSTRUCTIONS.md
 │   │   │   └── INSTRUCTIONS.md   # actual steps and knowledge
