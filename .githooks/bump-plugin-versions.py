@@ -13,6 +13,9 @@ bump 種別は Conventional Commits のプレフィックスで決める。
 `source: "./plugins/foo"` のマルチプラグイン型と `source: "./"` の
 単一プラグイン型（リポジトリルートがプラグイン）の両方に対応する。
 
+version の正は .claude-plugin/plugin.json とし、bump した値を
+.devin-plugin/plugin.json（Devin 用マニフェスト）と marketplace.json にも揃える。
+
 次の場合は対象から外す。
   - そのコミットで既に version が変わっている (手動 bump の尊重・二重 bump の防止)
   - plugin.json がそのコミットで新規追加された (初期バージョンをそのまま使う)
@@ -34,6 +37,7 @@ SEMVER = re.compile(r"^(\d+)\.(\d+)\.(\d+)$")
 # 構成要素が増えたらここに足す。
 PLUGIN_COMPONENTS = (
     ".claude-plugin/plugin.json",
+    ".devin-plugin/plugin.json",
     "skills/",
     "commands/",
     "agents/",
@@ -290,6 +294,19 @@ def main():
         with open(manifest, "w", encoding="utf-8") as f:
             f.write(replace_version(manifest_text, new))
         written.append(manifest)
+
+        # Devin 用マニフェストがあれば同じ値に揃える。
+        # .claude-plugin と同じ skills/ などを共有しているため、version もずらさない。
+        devin_manifest = (
+            f"{root}/.devin-plugin/plugin.json" if root else ".devin-plugin/plugin.json"
+        )
+        if os.path.exists(devin_manifest):
+            with open(devin_manifest, encoding="utf-8") as f:
+                devin_text = f.read()
+            if read_version(devin_text) is not None and read_version(devin_text) != new:
+                with open(devin_manifest, "w", encoding="utf-8") as f:
+                    f.write(replace_version(devin_text, new))
+                written.append(devin_manifest)
 
         # marketplace.json 側にも version があれば同じ値に揃える
         if marketplace_text is not None:
