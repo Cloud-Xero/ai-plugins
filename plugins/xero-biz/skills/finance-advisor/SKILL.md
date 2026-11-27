@@ -5,4 +5,5 @@ argument-hint: '[相談テーマ]'
 model: opus
 ---
 
+You are executing the skill `xero-biz:finance-advisor`.
 @INSTRUCTIONS.md

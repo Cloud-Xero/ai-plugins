@@ -5,4 +5,5 @@ argument-hint: '[テーマ or 観点名] [目標 例:初月10万] [チャネル 
 model: opus
 ---
 
+You are executing the skill `xero-biz:market-research`.
 @INSTRUCTIONS.md

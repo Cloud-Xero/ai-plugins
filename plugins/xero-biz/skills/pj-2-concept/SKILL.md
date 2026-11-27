@@ -5,4 +5,5 @@ argument-hint: '[サービス名]'
 model: sonnet
 ---
 
+You are executing the skill `xero-biz:pj-2-concept`.
 @INSTRUCTIONS.md

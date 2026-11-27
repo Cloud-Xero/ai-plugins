@@ -4,4 +4,5 @@ description: 公開Notionページ（notion.site）を子ページ・データ�
 argument-hint: '<NotionページURL> [出力先ディレクトリ(省略時は確認)]'
 ---
 
+You are executing the skill `xero-work:notion-to-md`.
 @INSTRUCTIONS.md

@@ -5,4 +5,5 @@ argument-hint: '[対象サービス]'
 model: sonnet
 ---
 
+You are executing the skill `xero-marketing:cs-design`.
 @INSTRUCTIONS.md
