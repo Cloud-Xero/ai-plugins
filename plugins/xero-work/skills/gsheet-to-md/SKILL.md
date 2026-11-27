@@ -4,4 +4,5 @@ description: 公開Googleスプレッドシートを全シート漏れなくダ�
 argument-hint: '<スプレッドシートURL> [出力先ディレクトリ(省略時は確認)]'
 ---
 
+You are executing the skill `xero-work:gsheet-to-md`.
 @INSTRUCTIONS.md

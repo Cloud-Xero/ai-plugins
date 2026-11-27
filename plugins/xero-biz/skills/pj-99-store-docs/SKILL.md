@@ -5,4 +5,5 @@ argument-hint: '[格納先パス(省略可)] [pj_プロジェクト名(省略可
 model: sonnet
 ---
 
+You are executing the skill `xero-biz:pj-99-store-docs`.
 @INSTRUCTIONS.md

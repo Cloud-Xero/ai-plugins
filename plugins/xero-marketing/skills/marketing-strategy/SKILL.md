@@ -5,4 +5,5 @@ argument-hint: '[対象サービス・事業]'
 model: opus
 ---
 
+You are executing the skill `xero-marketing:marketing-strategy`.
 @INSTRUCTIONS.md

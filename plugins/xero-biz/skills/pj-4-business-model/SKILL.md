@@ -5,4 +5,5 @@ argument-hint: '[プロジェクト名]'
 model: sonnet
 ---
 
+You are executing the skill `xero-biz:pj-4-business-model`.
 @INSTRUCTIONS.md
