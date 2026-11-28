@@ -1,7 +1,8 @@
 ---
 name: excel-inventory
 description: Excelブックの構造棚卸し（インベントリ作成）を行う。excel-analyze スキルの第1工程として呼び出される。対象の .xlsx を openpyxl で走査し、シート一覧・セル分類（定数/数式/空欄）・名前付き範囲・テーブル・データ検証・非表示要素を抽出して 01_inventory.json と 01_inventory.md を出力する。
-tools: Bash, Read, Write, Glob
+# exec は Devin のシェル実行ツール名。Devin は Bash を exec に読み替えないため、無いとコマンドを実行できない（Claude Code は未知の名前を無視する）
+tools: Bash, Read, Write, Glob, exec
 model: sonnet
 ---
 

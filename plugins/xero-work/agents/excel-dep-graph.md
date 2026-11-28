@@ -1,7 +1,8 @@
 ---
 name: excel-dep-graph
 description: Excelブックの数式依存関係グラフを構築する。excel-analyze スキルの第2工程として呼び出される。第1工程の 01_inventory.json を入力に、数式のセル参照（他シート・名前付き範囲含む）をパースして有向グラフを作り、入力セル/中間計算/出力セルの3層分類と未使用セルの検出を行い、02_dependencies.json と 02_dependency-graph.md を出力する。
-tools: Bash, Read, Write, Glob
+# exec は Devin のシェル実行ツール名。Devin は Bash を exec に読み替えないため、無いとコマンドを実行できない（Claude Code は未知の名前を無視する）
+tools: Bash, Read, Write, Glob, exec
 model: sonnet
 ---
 

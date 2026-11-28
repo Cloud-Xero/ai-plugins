@@ -1,7 +1,8 @@
 ---
 name: excel-logic-spec
 description: Excelブックの計算ロジックを業務語彙の仕様書に翻訳する。excel-analyze スキルの第3工程として呼び出される。01_inventory.json と 02_dependencies.json を入力に、数式を周辺ラベル（見出し行・左隣セル）と突き合わせて「粗利率 = (売上 − 原価) / 売上」のような意味のある仕様に変換し、03_logic-spec.md を出力する。
-tools: Bash, Read, Write, Glob, Grep
+# exec は Devin のシェル実行ツール名。Devin は Bash を exec に読み替えないため、無いとコマンドを実行できない（Claude Code は未知の名前を無視する）
+tools: Bash, Read, Write, Glob, Grep, exec
 model: sonnet
 ---
 

@@ -1,7 +1,8 @@
 ---
 name: refactor-plan-analyzer
 description: リファクタリング対象（ページ・feature・モジュール）のコードを読まずに壊さず「実測」して構造分析レポートを作るエージェント。refactor-plan スキルの第1工程として対象ごとに並列起動される。wc -l / grep でファイル規模・トップレベル定義・フック使用回数・データ層呼び出し・行レンジ別ブロック・重複パターン・外部依存を数値で洗い出し、指定された一時ディレクトリに分析レポート md を出力する。計画書の執筆は refactor-plan-writer の領分で、こちらは事実の収集に徹する。
-tools: Bash, Read, Glob, Grep, Write
+# exec は Devin のシェル実行ツール名。Devin は Bash を exec に読み替えないため、無いとコマンドを実行できない（Claude Code は未知の名前を無視する）
+tools: Bash, Read, Glob, Grep, Write, exec
 model: sonnet
 ---
 
