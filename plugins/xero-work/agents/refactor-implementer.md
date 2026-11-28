@@ -1,7 +1,8 @@
 ---
 name: refactor-implementer
 description: "docs/refactoring/ のリファクタリング計画から、指定された PR ステップ 1 つだけを実装するサブエージェント。計画ファイルパス・PR ステップ番号・ブランチ名・リポジトリ事実（検証コマンド・制約リスト等）を受け取り、git worktree 隔離の中で実装→検証→コミット→push まで行う。refactor-page スキル（オーケストレータ）から isolation: worktree で呼ばれる。単独では使わず、必ず計画とステップとリポジトリ事実を与えて呼ぶ。"
-tools: Read, Write, Edit, Glob, Grep, Bash
+# exec は Devin のシェル実行ツール名。Devin は Bash を exec に読み替えないため、無いとコマンドを実行できない（Claude Code は未知の名前を無視する）
+tools: Read, Write, Edit, Glob, Grep, Bash, exec
 model: inherit
 ---
 

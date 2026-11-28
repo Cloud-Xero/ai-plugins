@@ -1,7 +1,8 @@
 ---
 name: excel-snapshot
 description: Excelブックの入出力スナップショット（回帰テスト用データ）を採取する。excel-analyze スキルの第4工程として呼び出される。02_dependencies.json の入力セル・出力セル分類に基づき、現在の入力値と計算結果値のペアを 04_snapshot.json として保存し、Webアプリ移植後の検証方法を 04_test-cases.md にまとめる。
-tools: Bash, Read, Write, Glob
+# exec は Devin のシェル実行ツール名。Devin は Bash を exec に読み替えないため、無いとコマンドを実行できない（Claude Code は未知の名前を無視する）
+tools: Bash, Read, Write, Glob, exec
 model: sonnet
 ---
 

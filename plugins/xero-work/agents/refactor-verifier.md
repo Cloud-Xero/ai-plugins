@@ -1,7 +1,8 @@
 ---
 name: refactor-verifier
 description: "refactor-implementer が push したリファクタリングブランチを「挙動不変」の観点で検証するチェッカー。ブランチ名・計画ファイルパス・PR ステップ・リポジトリ事実（検証コマンド・制約リスト等）を受け取り、git worktree 隔離の中で diff レビューと検証コマンドの再実行を行い、PASS / FAIL と指摘リストを返す。refactor-page スキル（オーケストレータ）から implementer の直後に isolation: worktree で呼ばれる。コードの修正はしない（修正は implementer の仕事）。"
-tools: Read, Glob, Grep, Bash
+# exec は Devin のシェル実行ツール名。Devin は Bash を exec に読み替えないため、無いとコマンドを実行できない（Claude Code は未知の名前を無視する）
+tools: Read, Glob, Grep, Bash, exec
 model: inherit
 ---
 
